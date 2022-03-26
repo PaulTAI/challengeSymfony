@@ -9,13 +9,11 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-/**
- * @Route("/profile")
- */
+
 class BackOfficeController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/Dashboard", name="bo_dashboard", methods={"GET"})
      */
     public function index(): Response
     {

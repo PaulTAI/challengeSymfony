@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FrontOfficeController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="fo_home")
      */
     public function index(): Response
     {

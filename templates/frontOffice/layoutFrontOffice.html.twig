@@ -1,5 +1,13 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>layout front</h1>
+    <header>
+        {# menu front office #}
+        {% embed "embed/_fo_menu.html.twig" %}{% endembed %}
+    </header>
+
+    {# contenu du layout #}
+    <div class="container">
+        {% block container %}{% endblock %}
+    </div>
 {% endblock %}

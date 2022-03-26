@@ -1,0 +1,70 @@
+.nav-fo{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #2d3c42;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    text-transform: uppercase;
+
+    .nav-links-fo{
+        list-style: none;
+        li{
+            display: inline-block;
+            padding: 0px 20px;
+            a{
+                transition: all 0.3s ease 0s;
+                text-decoration: none;
+            }
+            a:hover{
+                color: #e1e9ed;
+            }
+        }
+    }
+
+    .logo-attr{
+        cursor: pointer;
+        color: #1081cc;
+    }
+
+    a.active{
+        color: #1081cc;
+    }
+
+    a{
+        font-weight: 500;
+        font-size: 16px;
+        color: #bfc6c9;
+        transition: color 0.1s,background-color 0.1s,padding 0.2s ease-in;
+        position: relative;
+        display: block;
+        padding: 16px 0;
+        margin: 0 12px;
+        line-height: 16px;
+        text-transform: uppercase;
+        transition: color 0.1s,background-color 0.1s,padding 0.2s ease-in;
+    }
+
+    a::before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 3px;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        background-color: #1081cc;
+        transform-origin: right top;
+        transform: scale(0, 1);
+        transition: color 0.1s,transform 0.2s ease-out;
+    }
+    a:active::before {
+        background-color: #000;
+    }
+    a:hover::before, a:focus::before {
+        transform-origin: left top;
+        transform: scale(1, 1);
+    }
+}
