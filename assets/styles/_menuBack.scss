@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+:root{
+    --bo-navbar-bg-color: #2c2a28;
+    --bo-navbar-separator-color: #f2f2f2;
+    --bo-navbar-icon-color: #f2f2f2;
+    --bo-navbar-icon-hover-color: #9621cc;
+    --bo-navbar-text-color:#f2f2f2;
+    --bo-navbar-transition-speed: .2s;
+    --bo-navbar-item-hovered-color: #1081cc;
+    --bo-navbar-logo-bg-color:#7e7e7e;
+}
+
+.navbar-bo{
+    width: 5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background:var(--bo-navbar-bg-color);
+    box-shadow: rgba(12, 43, 30, 0.2) 0 4px 14px;
+    transition: width var(--bo-navbar-transition-speed) ease;
+
+    .navbar-bo-menu{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+
+        .navbar-bo-items{
+            width: 100%;
+            border-bottom: solid 1px var(--bo-navbar-separator-color);
+            transition: background-color var(--bo-navbar-transition-speed);
+        }
+        .navbar-bo-items:hover{
+            background-color: var(--bo-navbar-item-hovered-color);
+
+            .navbar-icon{
+                color: var(--bo-navbar-icon-hover-color);
+            }
+        }
+        
+        .navbar-bo-items:last-child {
+            margin-top: auto;
+        }
+    }
+    
+}
+
+.bo-logo{
+    background: var(--bo-navbar-logo-bg-color);
+    .navbar-title{
+        font-size: 16px;
+        font-weight: bold;
+        margin-left: 1.5rem;
+    }
+}
+
+.navbar-bo-links{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 5rem;
+    width: 100%;
+    text-decoration: none;
+}
+
+.navbar-icon{
+    text-align: center;
+    font-size: 1.5rem;
+    min-width: 2rem;
+    margin: 0 1.5rem;
+    color: var(--bo-navbar-icon-color);
+    transition: var(--bo-navbar-transition-speed);
+}
+
+.navbar-title{
+    color: var(--bo-navbar-text-color);
+}
+
+.navbar-bo:not(:hover){
+    .navbar-title{
+        display: none;
+    }
+}
+
+.navbar-bo:hover{
+    width: 15rem;
+    .bo-logo .navbar-icon{
+        transform: rotate(180deg);
+    }
+}
+
+@media  screen and (max-width:1024px){
+    .navbar-bo{
+        top: auto;
+        width: 100%;
+        bottom: 0px;
+        .navbar-bo-menu{
+            flex-direction: row;
+        }
+    }
+
+    .navbar-bo:hover{
+        width: 100%;
+        .navbar-title{
+            display: none;
+        }
+    }
+
+    .bo-logo{
+        display: none;
+    }
+
+    main{
+        margin-left: 0;
+        margin-bottom: 5rem;
+    }
+
+    .navbar-icon{
+        min-width: auto;
+        margin: 0;
+    }
+
+    .navbar-bo-links{
+        justify-content: center;
+    }
+}

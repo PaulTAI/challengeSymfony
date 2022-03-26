@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-
+{% block title %}ChallengeSym{% endblock %}
 {% block body %}
     <header>
         {# menu front office #}
@@ -10,4 +10,5 @@
     <div class="container">
         {% block container %}{% endblock %}
     </div>
+    {% embed "embed/_footer.html.twig" %}{% endembed %}
 {% endblock %}

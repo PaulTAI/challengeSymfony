@@ -3,8 +3,8 @@
         <h3>ChallengeSym</h3>
     </div>
     <ul class="nav-links-fo">
-        <li><a href="{{ path('fo_home') }}" class="active">Home</a></li>
-        <li><a href="{{ path('security_login') }}">Connexion</a></li>
-        <li><a href="{{ path('security_signup') }}">Inscripton</a></li>
+        <li><a href="{{ path('fo_home') }}" class ="{{ app.request.pathInfo == path('fo_home') ? "active" : "" }}">Home</a></li>
+        <li><a href="{{ path('security_login') }}" class ="{{ app.request.pathInfo == path('security_login') ? "active" : "" }}">Connexion</a></li>
+        <li><a href="{{ path('security_signup') }}" class ="{{ app.request.pathInfo == path('security_signup') ? "active" : "" }}">Inscripton</a></li>
     </ul>
 </nav>

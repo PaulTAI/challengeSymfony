@@ -1,1 +1,34 @@
-mon menu
+<nav class="navbar-bo">
+    <ul class="navbar-bo-menu">
+        <li class="bo-logo" style="width: 100%;">
+            <a href="{{ path('bo_dashboard') }}" class="navbar-bo-links">
+                <span class="navbar-title">ChallengeSym</span>
+                <i class="fa-solid fa-chevron-right navbar-icon"></i>
+            </a>
+        </li>
+        <li class="navbar-bo-items">
+            <a href="{{ path('bo_dashboard') }}" class="navbar-bo-links">
+                <i class="fa-solid fa-house navbar-icon"></i>
+                <span class="navbar-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="navbar-bo-items">
+            <a href="{{ path('bo_users') }}" class="navbar-bo-links">
+                <i class="fa-solid fa-user navbar-icon"></i>
+                <span class="navbar-title">Utilisateurs</span>
+            </a>
+        </li>
+        <li class="navbar-bo-items">
+            <a href="{{ path('bo_documents') }}" class="navbar-bo-links">
+                <i class="fa-solid fa-folder-open navbar-icon"></i>
+                <span class="navbar-title">Documents</span> 
+            </a>
+        </li>
+        <li class="navbar-bo-items">
+            <a href="{{ path('security_logout') }}" class="navbar-bo-links">
+                <i class="fa-solid fa-power-off navbar-icon icon-logout"></i>
+                <span class="navbar-title">Déconnexion</span> 
+            </a>
+        </li>
+    </ul>
+</nav>

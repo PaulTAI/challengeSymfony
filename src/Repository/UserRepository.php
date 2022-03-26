@@ -73,4 +73,37 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * delete an user
+     * 
+     * @param integer $id user id
+     */
+    public function deleteUser(int $id)
+    {
+        $em = $this->getEntityManager();
+        $user = $this->findBy(["id" => $id])[0];
+        $em->remove($user);
+        $em->flush();
+    }
+
+    /**
+     * Get the user role by his id
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function getUserRolesById(int $id)
+    {
+        return (array)$this->findBy(['id' => $id])[0]->getRoles();
+    }
+
+    public function setRole($role, $id)
+    {
+        $em = $this->getEntityManager();
+        $user = $this->findBy(["id" => $id])[0];
+        $user->setRoles($role);
+        $em->persist($user);
+        $em->flush();
+    }
 }

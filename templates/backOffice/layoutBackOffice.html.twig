@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-
+{% block title %}{% endblock %}
 {% block body %}
     <header>
         {# menu Back office #}
@@ -7,7 +7,9 @@
     </header>
 
     {# contenu du layout #}
-    <div class="container">
-        {% block container %}{% endblock %}
-    </div>
+    <main>
+        <div class="container">
+            {% block container %}{% endblock %}
+        </div>
+    </main>
 {% endblock %}

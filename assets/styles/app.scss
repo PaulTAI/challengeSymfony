@@ -1,4 +1,9 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "main";
-@import "menuFront";
+@import "footer";
+
 @import "layoutFront";
+@import "menuFront";
+
+@import "layoutBack";
+@import "menuBack";
