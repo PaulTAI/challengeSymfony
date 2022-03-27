@@ -12245,4 +12245,18 @@ main {
 .modify-status a {
   text-decoration: none;
 }
+
+.valide-btn {
+  font-size: 24px;
+  margin: 5px;
+  color: green;
+}
+
+.valide-btn:hover {
+  color: honeydew;
+}
+
+.valide-btn a {
+  text-decoration: none;
+}
 /*# sourceMappingURL=app.css.map */

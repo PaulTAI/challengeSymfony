@@ -27,7 +27,7 @@
 						<td>
 							<div class="row">
 								<div class="col">
-									<a href="{{ path("async_valide_user") }}">
+									<a href="{{ path("async_valide_user", { id: usersNotValid.id }) }}" class="valide-btn">
 										<i class="fa-solid fa-user-check"></i>
 									</a>
 									<button type="button" class="btn btn-danger delete-user" data-bs-toggle="modal" data-bs-target="#confirm-delete-user"  data-id="{{ usersNotValid.id }}" data-firstname="{{ usersNotValid.firstname }}" data-lastname="{{ usersNotValid.lastname }}">

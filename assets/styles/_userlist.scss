@@ -16,3 +16,15 @@
         text-decoration: none;
     }
 }
+
+.valide-btn{
+    font-size: 24px;
+    margin: 5px;
+    color: green;
+    &:hover {
+        color: honeydew;
+    }
+    a {
+        text-decoration: none;
+    }
+}

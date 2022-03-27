@@ -121,4 +121,22 @@ class UserRepository extends ServiceEntityRepository
     public function getUserNotValidate(){
         return (array)$this->findBy(['isValidate' => false]);
     }
+
+    /**
+     * Return les users qui sont validés (true)
+     */
+    public function getUserValidate(){
+        return (array)$this->findBy(['isValidate' => true]);
+    }
+
+    /**
+     * Met la value "isValide" a true dans la db
+     */
+    public function setValideUserById(int $id){
+        $em = $this->getEntityManager();
+        $user = $this->findBy(["id" => $id])[0];
+        $user->setIsValidate(true);
+        $em->persist($user);
+        $em->flush();
+    }
 }

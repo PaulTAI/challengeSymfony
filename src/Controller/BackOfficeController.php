@@ -35,11 +35,11 @@ class BackOfficeController extends AbstractController
      */
     public function UserList(UserRepository $userRepository): Response{
 
-        $users = $userRepository->findBy(array(), array('id' =>'ASC'));
+        $usersValidates = $userRepository->getUserValidate();
         $userNotValidate = $userRepository->getUserNotValidate();
 
         return $this->render("backOffice/userList.html.twig", [
-            'users' => $users,
+            'users' => $usersValidates,
             'usersNotValidates' => $userNotValidate
         ]);
     }
@@ -49,5 +49,12 @@ class BackOfficeController extends AbstractController
      */
     public function Documents(){
         return $this->render("backOffice/documents.html.twig");
+    }
+
+    /**
+     * @Route("/categories", name="bo_categories")
+     */
+    public function Categories(){
+        return $this->render("backOffice/categories.html.twig");
     }
 }

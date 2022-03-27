@@ -93,4 +93,13 @@ class UserService
             return false;
         }
     }
+
+    /**
+     * Change la valeur de isValide, pour permettre à l'utilisateur d'être validé
+     * @param integer $id
+     */
+    public function changeValidateValue(int $id)
+    {
+        return $this->userRepository->setValideUserById($id);
+    }
 }

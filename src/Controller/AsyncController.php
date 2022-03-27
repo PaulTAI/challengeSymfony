@@ -62,4 +62,17 @@ class AsyncController extends AbstractController
             return $this->redirectToRoute('bo_users');
         }
     }
+
+    /**
+     * @Route("/valideUser/{id}", name="async_valide_user")
+     * @isGranted("ROLE_ADMIN")
+     */
+    public function valideUser(int $id, FlashyNotifier $flashy)
+    {
+        $this->userService->changeValidateValue($id);
+
+        $flashy->success("Utilisateur validé !");
+        return $this->redirectToRoute('bo_users');
+
+    }
 }
