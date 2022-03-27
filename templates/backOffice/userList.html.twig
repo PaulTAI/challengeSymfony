@@ -1,7 +1,49 @@
 {% extends "backOffice/layoutBackOffice.html.twig" %}
 
 {% block container %}
-    <h1>Liste des utilisateurs</h1>
+
+	{# Table des utilisateurs en attente de validation #}
+	{% if is_granted("ROLE_ADMIN") %}
+		<h3>En attente de validation ...</h3>
+		<table class="table table-striped table-light text-center">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Nom</th>
+					<th scope="col">Prénom</th>
+					<th scope="col">Email</th>
+					<th scope="col">Administration</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set idTable = 0 %}
+				{% for usersNotValid in usersNotValidates %}
+					{% set idTable = idTable + 1 %}
+					<tr>
+						<th scope="row">{{idTable}}</th>
+						<td>{{ usersNotValid.lastname }}</td>
+						<td>{{ usersNotValid.firstname }}</td>
+						<td>{{ usersNotValid.email }}</td>
+						<td>
+							<div class="row">
+								<div class="col">
+									<a href="{{ path("async_valide_user") }}">
+										<i class="fa-solid fa-user-check"></i>
+									</a>
+									<button type="button" class="btn btn-danger delete-user" data-bs-toggle="modal" data-bs-target="#confirm-delete-user"  data-id="{{ usersNotValid.id }}" data-firstname="{{ usersNotValid.firstname }}" data-lastname="{{ usersNotValid.lastname }}">
+										<i class="fas fa-trash-alt"></i>
+									</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+
+	{# Table de tout les utilisateurs #}
+    <h3>Liste des utilisateurs</h3>
     <table class="table table-striped table-dark text-center">
 		<thead>
 			<tr>
@@ -10,7 +52,7 @@
 				<th scope="col">Prénom</th>
 				{% if is_granted("ROLE_ADMIN") %}
 				<th scope="col">Role</th>
-				<th scope="col"></th>
+				<th scope="col">Manage</th>
 				{% endif %}
 				<th scope="col">Infos</th>
 				{% if is_granted("ROLE_ADMIN") %}
@@ -37,15 +79,14 @@
 							{% endif %}
 						</td>
 						<td>
-                            fleches
-							{# <div class="modify-status">
-								<a href="{{ path('async_update_status_user', { id: user.id , isUpgrade: 1 }) }}" class="buttons arrow-up" id="btn-arrow-up">
+							<div class="modify-status">
+								<a href="{{ path('async_update_role_user', { id: user.id , isUpgrade: 1 }) }}" class="buttons arrow-up" id="btn-arrow-up">
 									<i class="far fa-arrow-alt-circle-up"></i>
 								</a>
-								<a href="{{ path('async_update_status_user', { id: user.id , isUpgrade: 0 }) }}" class="buttons arrow-down" id="btn-arrow-down">
+								<a href="{{ path('async_update_role_user', { id: user.id , isUpgrade: 0 }) }}" class="buttons arrow-down" id="btn-arrow-down">
 									<i class="far fa-arrow-alt-circle-down"></i>
 								</a>
-							</div> #}
+							</div>
 						</td>
 					{% endif %}
 					<td>

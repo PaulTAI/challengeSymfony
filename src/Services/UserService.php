@@ -67,4 +67,30 @@ class UserService
 
         return in_array($role, $roles);
     }
+
+    /**
+     * Change le role de l'utilisateur + ou -
+     *
+     * @param integer $id
+     * @param integer $isUpgrade -- 1=upgrade 0=downgrade
+     * @return boolean
+     */
+    public function changeUserRole(int $id, int $isUpgrade)
+    {
+        $userCurrentRoles = $this->userRepository->getUserRolesById($id);
+
+        if($isUpgrade == 1 && $userCurrentRoles[0] != "ROLE_GESTIONNAIRE"){
+
+            $this->userRepository->setRole(["ROLE_GESTIONNAIRE"], $id);
+            return true;
+
+        }elseif($isUpgrade == 0 && $userCurrentRoles[0] != "ROLE_USER"){
+
+            $this->userRepository->setRole(["ROLE_USER"], $id);
+            return true;
+
+        }else{
+            return false;
+        }
+    }
 }

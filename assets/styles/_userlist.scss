@@ -1,0 +1,18 @@
+.modify-status {
+    font-size: 24px;
+    .buttons {
+        margin: 5px;
+        &.arrow-up {
+            color: green;
+        }
+        &.arrow-down {
+            color: red;
+        }
+        &:hover {
+            color: honeydew;
+        }
+    }
+    a {
+        text-decoration: none;
+    }
+}

@@ -12221,4 +12221,28 @@ main {
             justify-content: center;
   }
 }
+
+.modify-status {
+  font-size: 24px;
+}
+
+.modify-status .buttons {
+  margin: 5px;
+}
+
+.modify-status .buttons.arrow-up {
+  color: green;
+}
+
+.modify-status .buttons.arrow-down {
+  color: red;
+}
+
+.modify-status .buttons:hover {
+  color: honeydew;
+}
+
+.modify-status a {
+  text-decoration: none;
+}
 /*# sourceMappingURL=app.css.map */

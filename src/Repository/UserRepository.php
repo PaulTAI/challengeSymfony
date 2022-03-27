@@ -114,4 +114,11 @@ class UserRepository extends ServiceEntityRepository
 
         return array($userFirstname, $userLastname);
     }
+
+    /**
+     * Return les users qui ne sont pas validés (false)
+     */
+    public function getUserNotValidate(){
+        return (array)$this->findBy(['isValidate' => false]);
+    }
 }

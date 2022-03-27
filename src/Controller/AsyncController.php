@@ -23,9 +23,11 @@ class AsyncController extends AbstractController
      * @Route("/deleteUser/{id}", name="async_delete_user")
      * @isGranted("ROLE_ADMIN")
      */
-    public function deleteUser(int $id): Response
+    public function deleteUser(int $id, FlashyNotifier $flashy): Response
     {
         $this->userService->deleteUser($id);
+
+        $flashy->success("L'utilisateur a bien été supprimé");
 
         return $this->redirectToRoute('bo_users');
     }
@@ -42,5 +44,22 @@ class AsyncController extends AbstractController
         $flashy->success("Un matelot de plus ! $userName[0] $userName[1]");
 
         return $this->redirectToRoute('bo_users');
+    }
+
+    /**
+     * @Route("/changeRole/{id}/{isUpgrade}", name="async_update_role_user")
+     * @isGranted("ROLE_ADMIN")
+     */
+    public function changeRoleUser(int $id, int $isUpgrade, FlashyNotifier $flashy): Response
+    {
+        $changedRolePassed = $this->userService->changeUserRole($id, $isUpgrade);
+
+        if($changedRolePassed ==  true){
+            $flashy->success('Le role a bien été modifié !');
+            return $this->redirectToRoute('bo_users');
+        }else{
+            $flashy->error("Le role n'a pas pu être modifié !");
+            return $this->redirectToRoute('bo_users');
+        }
     }
 }

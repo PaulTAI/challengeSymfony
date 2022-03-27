@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
@@ -32,13 +33,14 @@ class BackOfficeController extends AbstractController
     /**
      * @Route("/users", name="bo_users")
      */
-    public function UserList(ManagerRegistry $doctrine): Response{
+    public function UserList(UserRepository $userRepository): Response{
 
-        $repo = $doctrine->getRepository(User::class);
-        $users = $repo->findBy(array(), array('id' =>'ASC'));
+        $users = $userRepository->findBy(array(), array('id' =>'ASC'));
+        $userNotValidate = $userRepository->getUserNotValidate();
 
         return $this->render("backOffice/userList.html.twig", [
-            'users' => $users
+            'users' => $users,
+            'usersNotValidates' => $userNotValidate
         ]);
     }
 
