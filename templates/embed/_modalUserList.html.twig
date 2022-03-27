@@ -1,0 +1,45 @@
+{# pour regarder les infos de la personne #}
+<div class="modal fade" id="userInfos">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="infos-user-title"></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="infos-user-body"></div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# pour donner le role d'Administrateur #}
+<div class="modal fade" id="confirm-to-admin">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body" id="upgrade-user-body"></div>
+			<div class="modal-footer" id="upgrade-user-footer">
+                <a href="" class="btn btn-primary"><i class="fas fa-user-shield"></i> Admin</a>
+				<button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# pour Supprimer l'utilisateur #}
+<div class="modal fade" id="confirm-delete-user">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="delete-user-title"></h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="delete-user-body"></div>
+			<div class="modal-footer" id="delete-user-footer">
+                <a href="" class="btn btn-danger">Supprimer</a>
+				<button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

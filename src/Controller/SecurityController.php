@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\SignUpType;
 use App\Service\Security\PasswordService;
 use Doctrine\ORM\EntityManagerInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/signup", name="security_signup")
      */
-    public function signUp(Request $request, EntityManagerInterface $manager, PasswordService $pass): Response{
+    public function signUp(Request $request, EntityManagerInterface $manager, PasswordService $pass, FlashyNotifier $flashy): Response{
         $user = new User();
 
         $form = $this->createForm(SignUpType::class, $user);
@@ -36,9 +37,10 @@ class SecurityController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-            return $this->redirectToRoute('security_login');
+            $flashy->success("Votre compte a été crée !");
+
+            return $this->redirectToRoute('security_signup');
         }
-        
 
         return $this->render('security/signUp.html.twig', [
             'form' => $form->createView()

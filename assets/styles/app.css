@@ -4,6 +4,8 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -11957,7 +11959,266 @@ fieldset:disabled .btn {
   }
 }
 
-.backgroundtest {
-  background-color: red;
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.nav-fo {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #2d3c42;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px 8%;
+  text-transform: uppercase;
+}
+
+.nav-fo .nav-links-fo {
+  list-style: none;
+}
+
+.nav-fo .nav-links-fo li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.nav-fo .nav-links-fo li a {
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  text-decoration: none;
+}
+
+.nav-fo .nav-links-fo li a:hover {
+  color: #e1e9ed;
+}
+
+.nav-fo .logo-attr {
+  cursor: pointer;
+  color: #1081cc;
+}
+
+.nav-fo a.active {
+  color: #1081cc;
+}
+
+.nav-fo a {
+  font-weight: 500;
+  font-size: 16px;
+  color: #bfc6c9;
+  -webkit-transition: color 0.1s,background-color 0.1s,padding 0.2s ease-in;
+  transition: color 0.1s,background-color 0.1s,padding 0.2s ease-in;
+  position: relative;
+  display: block;
+  padding: 16px 0;
+  margin: 0 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  transition: color 0.1s,background-color 0.1s,padding 0.2s ease-in;
+}
+
+.nav-fo a::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background-color: #1081cc;
+  -webkit-transform-origin: right top;
+          transform-origin: right top;
+  -webkit-transform: scale(0, 1);
+          transform: scale(0, 1);
+  -webkit-transition: color 0.1s,-webkit-transform 0.2s ease-out;
+  transition: color 0.1s,-webkit-transform 0.2s ease-out;
+  transition: color 0.1s,transform 0.2s ease-out;
+  transition: color 0.1s,transform 0.2s ease-out,-webkit-transform 0.2s ease-out;
+}
+
+.nav-fo a:active::before {
+  background-color: #000;
+}
+
+.nav-fo a:hover::before, .nav-fo a:focus::before {
+  -webkit-transform-origin: left top;
+          transform-origin: left top;
+  -webkit-transform: scale(1, 1);
+          transform: scale(1, 1);
+}
+
+main {
+  padding: 1rem 4rem;
+  margin-left: 5rem;
+  text-align: justify;
+}
+
+:root {
+  --bo-navbar-bg-color: #2c2a28;
+  --bo-navbar-separator-color: #f2f2f2;
+  --bo-navbar-icon-color: #f2f2f2;
+  --bo-navbar-icon-hover-color: #9621cc;
+  --bo-navbar-text-color:#f2f2f2;
+  --bo-navbar-transition-speed: .2s;
+  --bo-navbar-item-hovered-color: #1081cc;
+  --bo-navbar-logo-bg-color:#7e7e7e;
+}
+
+.navbar-bo {
+  width: 5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: var(--bo-navbar-bg-color);
+  -webkit-box-shadow: rgba(12, 43, 30, 0.2) 0 4px 14px;
+          box-shadow: rgba(12, 43, 30, 0.2) 0 4px 14px;
+  -webkit-transition: width var(--bo-navbar-transition-speed) ease;
+  transition: width var(--bo-navbar-transition-speed) ease;
+}
+
+.navbar-bo .navbar-bo-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+}
+
+.navbar-bo .navbar-bo-menu .navbar-bo-items {
+  width: 100%;
+  border-bottom: solid 1px var(--bo-navbar-separator-color);
+  -webkit-transition: background-color var(--bo-navbar-transition-speed);
+  transition: background-color var(--bo-navbar-transition-speed);
+}
+
+.navbar-bo .navbar-bo-menu .navbar-bo-items:hover {
+  background-color: var(--bo-navbar-item-hovered-color);
+}
+
+.navbar-bo .navbar-bo-menu .navbar-bo-items:hover .navbar-icon {
+  color: var(--bo-navbar-icon-hover-color);
+}
+
+.navbar-bo .navbar-bo-menu .navbar-bo-items:last-child {
+  margin-top: auto;
+}
+
+.bo-logo {
+  background: var(--bo-navbar-logo-bg-color);
+}
+
+.bo-logo .navbar-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 1.5rem;
+}
+
+.navbar-bo-links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  height: 5rem;
+  width: 100%;
+  text-decoration: none;
+}
+
+.navbar-icon {
+  text-align: center;
+  font-size: 1.5rem;
+  min-width: 2rem;
+  margin: 0 1.5rem;
+  color: var(--bo-navbar-icon-color);
+  -webkit-transition: var(--bo-navbar-transition-speed);
+  transition: var(--bo-navbar-transition-speed);
+}
+
+.navbar-title {
+  color: var(--bo-navbar-text-color);
+}
+
+.navbar-bo:not(:hover) .navbar-title {
+  display: none;
+}
+
+.navbar-bo:hover {
+  width: 15rem;
+}
+
+.navbar-bo:hover .bo-logo .navbar-icon {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar-bo {
+    top: auto;
+    width: 100%;
+    bottom: 0px;
+  }
+  .navbar-bo .navbar-bo-menu {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .navbar-bo:hover {
+    width: 100%;
+  }
+  .navbar-bo:hover .navbar-title {
+    display: none;
+  }
+  .bo-logo {
+    display: none;
+  }
+  main {
+    margin-left: 0;
+    margin-bottom: 5rem;
+  }
+  .navbar-icon {
+    min-width: auto;
+    margin: 0;
+  }
+  .navbar-bo-links {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
 }
 /*# sourceMappingURL=app.css.map */

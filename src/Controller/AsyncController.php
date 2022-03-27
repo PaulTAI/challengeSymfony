@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\UserService;
 use App\Repository\UserRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -33,9 +34,12 @@ class AsyncController extends AbstractController
      * @Route("/makeAdmin/{id}", name="async_up_to_admin_user")
      * @isGranted("ROLE_ADMIN")
      */
-    public function AdminUser(int $id): Response
+    public function AdminUser(int $id, FlashyNotifier $flashy): Response
     {
         $this->userService->upgradeToAdmin($id);
+
+        $userName = $this->userService->nameUserById($id);
+        $flashy->success("Un matelot de plus ! $userName[0] $userName[1]");
 
         return $this->redirectToRoute('bo_users');
     }

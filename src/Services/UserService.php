@@ -40,6 +40,17 @@ class UserService
     }
 
     /**
+     * Return name of the user
+     * @param integer $id
+     * @return array
+     */
+    public function nameUserById(int $id){
+        $user = $this->userRepository->getUserName($id);
+        
+        return $user;
+    }
+
+    /**
      * Check if the role = Role with id user
      *
      * @param string $role

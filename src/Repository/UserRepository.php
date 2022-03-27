@@ -106,4 +106,12 @@ class UserRepository extends ServiceEntityRepository
         $em->persist($user);
         $em->flush();
     }
+
+    public function getUserName($id)
+    {
+        $userFirstname = $this->findBy(['id' => $id])[0]->getFirstname();
+        $userLastname = $this->findBy(['id' => $id])[0]->getLastname();
+
+        return array($userFirstname, $userLastname);
+    }
 }
