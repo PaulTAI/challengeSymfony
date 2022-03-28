@@ -6,9 +6,10 @@ use App\Repository\DocumentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
-class Document
+class Document implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -34,8 +35,11 @@ class Document
     #[ORM\Column(type: 'json')]
     private $allowRoles = [];
 
-    #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'documentList')]
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'documentList')]
     private $categories;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $filepath;
 
     public function __construct()
     {
@@ -81,6 +85,14 @@ class Document
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function getProtected(): ?string
@@ -142,6 +154,18 @@ class Document
         if ($this->categories->removeElement($category)) {
             $category->removeDocumentList($this);
         }
+
+        return $this;
+    }
+
+    public function getFilepath(): ?string
+    {
+        return $this->filepath;
+    }
+
+    public function setFilepath(string $filepath): self
+    {
+        $this->filepath = $filepath;
 
         return $this;
     }

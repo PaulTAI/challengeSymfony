@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends "backOffice/layoutBackOffice.html.twig" %}
 
-{% block title %}Document index{% endblock %}
+{% block title %}ChallengeSym - Documents{% endblock %}
 
-{% block body %}
+{% block container %}
     <h1>Document index</h1>
 
     <table class="table">
@@ -12,6 +12,7 @@
                 <th>Filename</th>
                 <th>UploadAt</th>
                 <th>Type</th>
+                <th>Categories</th>
                 <th>Protected</th>
                 <th>AllowRoles</th>
                 <th>actions</th>
@@ -24,11 +25,21 @@
                 <td>{{ document.filename }}</td>
                 <td>{{ document.uploadAt ? document.uploadAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ document.type }}</td>
-                <td>{{ document.protected }}</td>
+                <td>{% for categorie in document.categories %}
+                    {{ categorie.name }} |
+                {% endfor %}</td>
+                <td>
+                    {% if document.protected != null %}
+                        <i class="fa-solid fa-lock"></i>
+                    {% else %}
+                        <i class="fa-solid fa-lock-open"></i>   
+                    {% endif %}
+                </td>
                 <td>{{ document.allowRoles ? document.allowRoles|json_encode : '' }}</td>
                 <td>
-                    <a href="{{ path('bo_document_show', {'id': document.id}) }}">show</a>
-                    <a href="{{ path('bo_document_edit', {'id': document.id}) }}">edit</a>
+                    <a href="{{ asset('uploads/' ~ document.filepath) }}" target="_blank"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('async_download_file', {'id': document.id , 'roleUser' : app.user.roles[0]}) }}"><i class="fa-solid fa-download"></i></a>
+                    <a href="{{ path('bo_document_edit', {'id': document.id}) }}"><i class="fa-solid fa-gear"></i></a>
                 </td>
             </tr>
         {% else %}

@@ -1,13 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends "backOffice/layoutBackOffice.html.twig" %}
 
-{% block title %}Edit Document{% endblock %}
+{% block title %}Document - Edit{% endblock %}
+{% block select2css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+{% endblock %}
 
-{% block body %}
+{% block container %}
     <h1>Edit Document</h1>
 
-    {{ include('document/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('backOffice/document/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
-    <a href="{{ path('bo_document_index') }}">back to list</a>
+    <a href="{{ path('bo_documents') }}">back to list</a>
 
-    {{ include('document/_delete_form.html.twig') }}
+    {{ include('backOffice/document/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block select2js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>$('select').select2()</script>
 {% endblock %}

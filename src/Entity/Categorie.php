@@ -20,7 +20,7 @@ class Categorie
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $name;
 
-    #[ORM\ManyToMany(targetEntity: Document::class, inversedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Document::class, mappedBy: 'categories')]
     private $documentList;
 
     public function __construct()

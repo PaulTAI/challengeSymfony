@@ -8,13 +8,12 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DocumentType extends AbstractType
+class EditDocumentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -40,10 +39,6 @@ class DocumentType extends AbstractType
                 'class' => Categorie::class,
                 'choice_label' => 'name',
                 'multiple' => true
-            ])
-
-            ->add('filepath', FileType::class, [
-                'label' => 'Fichier...'  
             ])
         ;
         

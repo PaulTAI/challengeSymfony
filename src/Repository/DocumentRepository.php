@@ -73,4 +73,9 @@ class DocumentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getFilePathById(int $id)
+    {
+        return $this->findBy(['id' => $id])[0]->getFilepath();
+    }
 }

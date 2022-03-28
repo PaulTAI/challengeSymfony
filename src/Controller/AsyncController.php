@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
+use App\Repository\DocumentRepository;
 use App\Service\UserService;
 use App\Repository\UserRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -10,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 
 class AsyncController extends AbstractController
 {
@@ -89,5 +92,27 @@ class AsyncController extends AbstractController
         $flashy->success("Catégorie supprimée !");
         return $this->redirectToRoute('bo_categories');
 
+    }
+
+    /**
+     * @Route("/downloadFile/{id}/{roleUser}", name="async_download_file")
+     */
+    public function downloadFile($id, $roleUser, FlashyNotifier $flashy, DocumentRepository $docRepo){
+
+        $path = $docRepo->getFilePathById($id);
+        $user = $this->getUser();
+        $file = new File("../public/uploads/$path");
+        if($user->getRoles()[0] == $roleUser){
+
+            header('Content-Disposition: inline; filename="' . $file . '"');
+            header('Content-Tranfert-Encoding: binay');
+            header('Accept-Ranges: bytes');
+
+            $flashy->success("Fichier téléchargé !");
+            return $this->redirectToRoute('bo_documents');
+        }else{
+            $flashy->error("Le téléchargement n'as pas eu lieu, Acces refusé !");
+            return $this->redirectToRoute('bo_documents');
+        }
     }
 }
