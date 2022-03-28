@@ -1,31 +1,36 @@
 {% extends "backOffice/layoutBackOffice.html.twig" %}
 {% block title %}Categories{% endblock %}
 {% block container %}
-    <h3>Ajouter une catégorie</h3>
-
+    
     {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_GESTIONNAIRE") %}
-        {{ form_start(form) }}
-        <div class="form-cat-box">
-            {{ form_row(form.name, {'attr' : { 'placeholder' : 'Nom de la catégorie...'}}) }}
-            <button type="submit" class="btn btn-outline-primary">+</button>
-        </div>
-        {{ form_end(form)}}
+    <div class="pt-3 mb-3 shadow border rounded-pill border-primary">
+        <h3 class="text-center mb-3">Ajouter une catégorie</h3>
+            {{ form_start(form) }}
+            <div class="form-cat-box">
+                <div class=" col-8" >{{ form_row(form.name, {'attr' : { 'placeholder' : 'Nom de la catégorie...'}}) }}</div>
+                <div class="col-2 mb-3"><button type="submit" class="btn rounded-circle btn-outline-primary">+</button></div>
+            </div>
+            {{ form_end(form)}}
+    </div>
     {% else %}
+    <h3>Oops...</h3>
         <p>Vous n'avez pas accès à la gestion de catégories</p>
         <p>Vous pouvez quand même accèder à la liste des catégories crées</p>
     {% endif %}
     
     {# Liste des catégories #}
-    
-    {% for categorie in categories %}
-        <div class="categorie-box">
-            <div class="name-cat">{{ categorie.name }}</div>
-            <div class="btn-cat">
-                <a href="{{ path("async_remove_categorie", { id: categorie.id }) }}">
-                    <i class="fa-solid fa-user-check"></i>
-                </a>
+    <h3>Liste des Catégories :</h3>
+    <div class="categorie-box">
+        {% for categorie in categories %}
+            <div class="categorie-content p-3 shadow-sm border border-info border-info rounded-3 cat-item">
+                <div class="name-cat">{{ categorie.name }}</div>
+                <div class="btn-cat">
+                    <a href="{{ path("async_remove_categorie", { id: categorie.id }) }}" class="btn btn-danger">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
 {% endblock %}
