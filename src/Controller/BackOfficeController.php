@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Entity\Document;
 use App\Form\CategorieType;
+use App\Form\DocumentType;
 use App\Repository\CategorieRepository;
+use App\Repository\DocumentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -45,13 +48,6 @@ class BackOfficeController extends AbstractController
             'users' => $usersValidates,
             'usersNotValidates' => $userNotValidate
         ]);
-    }
-
-    /**
-     * @Route("/documents", name="bo_documents")
-     */
-    public function Documents(): Response{
-        return $this->render("backOffice/documents.html.twig");
     }
 
     /**
