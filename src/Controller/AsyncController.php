@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategorieRepository;
 use App\Service\UserService;
 use App\Repository\UserRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -73,6 +74,20 @@ class AsyncController extends AbstractController
 
         $flashy->success("Utilisateur validé !");
         return $this->redirectToRoute('bo_users');
+
+    }
+
+    /**
+     * @Route("/removeCategorie/{id}", name="async_remove_categorie")
+     * @isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_GESTIONNAIRE")
+     */
+    public function removeCategorie(int $id, FlashyNotifier $flashy, CategorieRepository $catRepo)
+    {
+        $catRepo->removeCatById($id);
+
+        $flashy->success("Catégorie supprimée !");
+        return $this->redirectToRoute('bo_categories');
 
     }
 }

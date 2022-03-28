@@ -73,4 +73,15 @@ class CategorieRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * Remove une categorie par son id
+     */
+    public function removeCatById(int $id)
+    {
+        $em = $this->getEntityManager();
+        $cat = $this->findBy(["id" => $id])[0];
+        $em->remove($cat);
+        $em->flush();
+    }
 }

@@ -4,6 +4,12 @@ security:
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ADMIN, ROLE_GESTIONNAIRE, ROLE_USER]
+        ROLE_GESTIONNAIRE: ROLE_GESTIONNAIRE, ROLE_USER
+        ROLE_USER: [ROLE_USER]
+
     providers:
         app_user_provider:
                 entity:

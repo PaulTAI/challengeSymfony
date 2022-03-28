@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Categorie;
+use App\Form\CategorieType;
+use App\Repository\CategorieRepository;
 use App\Repository\UserRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 
 class BackOfficeController extends AbstractController
@@ -47,14 +50,33 @@ class BackOfficeController extends AbstractController
     /**
      * @Route("/documents", name="bo_documents")
      */
-    public function Documents(){
+    public function Documents(): Response{
         return $this->render("backOffice/documents.html.twig");
     }
 
     /**
      * @Route("/categories", name="bo_categories")
      */
-    public function Categories(){
-        return $this->render("backOffice/categories.html.twig");
+    public function Categories(Request $request, FlashyNotifier $flashy, EntityManagerInterface $manager, CategorieRepository $catRepo): Response{
+        
+        $categorie = new Categorie();
+
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            //--push datas
+            $manager->persist($categorie);
+            $manager->flush();
+
+            $flashy->primary("Catégorie ajoutée !");
+        }
+
+        $cats = $catRepo->findAll();
+
+        return $this->render("backOffice/categories.html.twig", [
+            'form' => $form->createView(),
+            'categories' => $cats
+        ]);
     }
 }
