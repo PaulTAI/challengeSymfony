@@ -81,14 +81,6 @@ class DocumentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'bo_document_show', methods: ['GET'])]
-    public function show(Document $document): Response
-    {
-        return $this->render('backOffice/document/show.html.twig', [
-            'document' => $document,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'bo_document_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Document $document, DocumentRepository $documentRepository, UserPasswordHasherInterface $passHasher, FlashyNotifier $flashy): Response
     {
@@ -114,7 +106,7 @@ class DocumentController extends AbstractController
                 'form' => $form,
             ]);
         } else if($user->getRoles()[0] == "ROLE_USER" || $user->getRoles()[0] == "ROLE_GESTIONNAIRE") {
-            //-- Si l'utilisateur n'est pas le propriétaire & a le role User
+            //-- Si l'utilisateur n'est pas le propriétaire & a le role User ou Gestionnaire
             $flashy->error("Tu n'es pas autorisé à editer ce document !");
             return $this->redirectToRoute('bo_documents');
         }else{
@@ -142,12 +134,30 @@ class DocumentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'bo_document_delete', methods: ['POST'])]
-    public function delete(Request $request, Document $document, DocumentRepository $documentRepository): Response
+    public function delete(Request $request, Document $document, DocumentRepository $documentRepository, FlashyNotifier $flashy): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {
-            $documentRepository->remove($document);
+        $owner = $document->getOwner();
+        $user = $this->getUser();
+        if($owner == $user)
+        {
+            if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {
+                $documentRepository->remove($document);
+            }
+            $flashy->success('Document bien supprimé !');
+            return $this->redirectToRoute('bo_documents', [], Response::HTTP_SEE_OTHER);
+
+        }elseif($user->getRoles()[0] == "ROLE_ADMIN") {
+            //-- Denied si il n'es pas l'owner ni un administrateur
+            $this->denyAccessUnlessGranted("ROLE_ADMIN");
+
+            if ($this->isCsrfTokenValid('delete'.$document->getId(), $request->request->get('_token'))) {
+                $documentRepository->remove($document);
+            }
+            $flashy->success('Document bien supprimé !');
+            return $this->redirectToRoute('bo_documents', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->redirectToRoute('bo_documents', [], Response::HTTP_SEE_OTHER);
+        $flashy->error("Tu n'es pas autorisé à supprimer ce document !");
+        return $this->redirectToRoute('bo_documents');
     }
 }

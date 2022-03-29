@@ -15,6 +15,12 @@
         <button class="btn rounded-pill btn-primary">Editer</button>
     </div>
     {{ form_end(form) }}
+    <form method="post" action="{{ path('bo_document_delete', {'id': document.id}) }}" onsubmit="return confirm('Voulez-vous supprimer ce document ?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ document.id) }}">
+        <div class="delete-btns pt-2">
+            <button class="btn btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Supprimer</button>
+        </div>
+    </form>
 
 {% endblock %}
 
