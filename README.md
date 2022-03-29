@@ -7,7 +7,7 @@ Une application se basant sur l'upload et la sécurisation & l'acces de document
 `git clone git@github.com:PaulTAI/challengeSymfony.git`
 - installer les dependances :
 `npm i`
-`composer require`
+`composer install`
 
 ## Start Server
 `symfony server:start`
