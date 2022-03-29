@@ -1,11 +1,11 @@
 # Challenge Sym
 
-Challenge Sym est une applis demo, un challenge réalisé à la demande.
-Une application se basant sur l'upload et la sécurisation & l'acces de documents et la gestion.
+Challenge Sym est une application demo, un challenge réalisé à la demande.<br/>
+Une application se basant sur l'upload de fichier, la sécurisation, l'acces de documents et la gestion utilisateurs.
 ## Installation
 - clone le repo:
 `git clone git@github.com:PaulTAI/challengeSymfony.git`
-- installer les dependances :
+- Installer les dependances :
 `npm i`
 `composer install`
 
@@ -18,13 +18,13 @@ Une application se basant sur l'upload et la sécurisation & l'acces de document
 
 ## Features
 
-- Permet toute l'authentification system (connexion / inscription / accès)
+- Permet toute l'authentification system (connexion / inscription / acces)
 - La gestion d'utilisateurs :
     * Suppression
     * Upgrade / downgrade
     * Infos & nombre de documents uploadés
 - La gestion de documents :
-   * Accès sur les documents (restriction suivant les parametres désignés)
+   * Acces sur les documents (restriction suivant les paramètres désignés)
    * Suppression / Ajout 
    * Affichage /  Téléchargements
    * Propriétaire unique
@@ -66,9 +66,9 @@ Des Libs sont nécessaires pour la durée de production :
 * [Flashy] - Pour les notifs
 
 ## Production
-[DEMO] -> Production (comming soon)
-Prise en Main : Se créer un compte & Enjoy
-`Voir les Rules(REAMDE) avant de commencer. #Rules`
+[DEMO] -> Production (comming soon)<br/>
+Prise en Main : Se créer un compte & Enjoy<br/>
+<t color="red">Voir les Rules(REAMDE) avant de commencer. #Rules</t><br/>
 Compte de production de test:
 >Admin
 ```
@@ -97,6 +97,7 @@ Voici la "role hierarchie" de l'application (v 1.0)
 | Gestionnaire | Catégorie + Accès aux documents liés à son role + User |
 | Utilisateur | Dit "User" simple utilisateur, peut ajouter des documents ! |
 | Pas Validé | Utilisateur en attente de validation par un Admin. |
+<br/>
 `Par défault après la création du compte l'utilisateur est en attente de validation par un administrateur ![Pas validé]`
 
 
