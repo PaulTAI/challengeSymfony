@@ -39,7 +39,8 @@ class DocumentType extends AbstractType
             ->add('categories', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'name',
-                'multiple' => true
+                'multiple' => true,
+                'required' => false
             ])
 
             ->add('filepath', FileType::class, [

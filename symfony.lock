@@ -83,6 +83,25 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "league/flysystem": {
+        "version": "3.0.12"
+    },
+    "league/flysystem-bundle": {
+        "version": "2.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "913dc3d7a5a1af0d2b044c5ac3a16e2f851d7380"
+        },
+        "files": [
+            "./config/packages/flysystem.yaml",
+            "./var/storage/.gitignore"
+        ]
+    },
+    "league/mime-type-detection": {
+        "version": "1.9.0"
+    },
     "mercuryseries/flashy-bundle": {
         "version": "v5.1.0"
     },
@@ -91,6 +110,15 @@
     },
     "nikic/php-parser": {
         "version": "v4.13.2"
+    },
+    "oneup/flysystem-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "3ae1b83985e89138f5443bbc2d9b8c074b497d49"
+        }
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"

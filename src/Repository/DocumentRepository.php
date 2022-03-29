@@ -78,4 +78,9 @@ class DocumentRepository extends ServiceEntityRepository
     {
         return $this->findBy(['id' => $id])[0]->getFilepath();
     }
+
+    public function getAllowRolesById(int $id)
+    {
+        return $this->findBy(['id' => $id])[0]->getAllowRoles();
+    }
 }

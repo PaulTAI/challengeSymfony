@@ -2,17 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Document;
 use App\Repository\CategorieRepository;
 use App\Repository\DocumentRepository;
 use App\Service\UserService;
 use App\Repository\UserRepository;
+use League\Flysystem\FilesystemOperator;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AsyncController extends AbstractController
 {
@@ -95,24 +99,55 @@ class AsyncController extends AbstractController
     }
 
     /**
-     * @Route("/downloadFile/{id}/{roleUser}", name="async_download_file")
+     * @Route("/downloadFile/{id}", name="async_download_file")
      */
-    public function downloadFile($id, $roleUser, FlashyNotifier $flashy, DocumentRepository $docRepo){
+    public function downloadFile(Document $document, FlashyNotifier $flashy, FilesystemOperator $privateStorage){
 
-        $path = $docRepo->getFilePathById($id);
-        $user = $this->getUser();
-        $file = new File("../public/uploads/$path");
-        if($user->getRoles()[0] == $roleUser){
+        $path = $document->getFilepath();
+        
+        $allowRole = $document->getAllowRoles()[0];
+        $this->denyAccessUnlessGranted($allowRole, $document);
 
-            header('Content-Disposition: inline; filename="' . $file . '"');
-            header('Content-Tranfert-Encoding: binay');
-            header('Accept-Ranges: bytes');
+        $response = new StreamedResponse(function() use ($document, $privateStorage){
+            $pathFile= $document->getFilepath();
+            $outputStream = fopen('php://output', 'wb');
+            $fileStream = $privateStorage->readStream($pathFile);
 
-            $flashy->success("Fichier téléchargé !");
-            return $this->redirectToRoute('bo_documents');
-        }else{
-            $flashy->error("Le téléchargement n'as pas eu lieu, Acces refusé !");
-            return $this->redirectToRoute('bo_documents');
-        }
+            stream_copy_to_stream($fileStream, $outputStream);
+        });
+
+        $response->headers->set('Content-Type', $privateStorage->mimeType($path));
+        $disposition = HeaderUtils::makeDisposition(
+            HeaderUtils::DISPOSITION_ATTACHMENT,
+            $path,
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+
+        return $response;
+
+    }
+
+    /**
+     * @Route("/viewFile/{id}", name="async_view_file")
+     */
+    public function viewFile(Document $document, FlashyNotifier $flashy, FilesystemOperator $privateStorage){
+
+        $path = $document->getFilepath();
+        
+        $allowRole = $document->getAllowRoles()[0];
+        $this->denyAccessUnlessGranted($allowRole, $document);
+
+        $response = new StreamedResponse(function() use ($document, $privateStorage){
+            $pathFile= $document->getFilepath();
+            $outputStream = fopen('php://output', 'wb');
+            $fileStream = $privateStorage->readStream($pathFile);
+
+            stream_copy_to_stream($fileStream, $outputStream);
+        });
+
+        $response->headers->set('Content-Type', $privateStorage->mimeType($path));
+
+        return $response;
     }
 }

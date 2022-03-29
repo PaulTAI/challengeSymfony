@@ -38,7 +38,7 @@
                 <td>{{ document.allowRoles ? document.allowRoles|json_encode : '' }}</td>
                 <td>
                     <a href="{{ asset('uploads/' ~ document.filepath) }}" target="_blank"><i class="fa-solid fa-eye"></i></a>
-                    <a href="{{ path('async_download_file', {'id': document.id , 'roleUser' : app.user.roles[0]}) }}"><i class="fa-solid fa-download"></i></a>
+                    <a href="{{ path('async_download_file', {'id': document.id }) }}"><i class="fa-solid fa-download"></i></a>
                     <a href="{{ path('bo_document_edit', {'id': document.id}) }}"><i class="fa-solid fa-gear"></i></a>
                 </td>
             </tr>
