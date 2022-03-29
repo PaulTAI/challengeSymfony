@@ -3,8 +3,63 @@
 {% block title %}ChallengeSym - Documents{% endblock %}
 
 {% block container %}
-    <h1>Documents</h1>
+{% if app.user.isValidate %}
+    <h1>Mes Documents</h1>
 
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Filename</th>
+                <th>Date d'ajout</th>
+                <th>Type</th>
+                <th>Categories</th>
+                <th>Protected</th>
+                <th>Accès</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for documentOwn in documentsOwn %}
+            <tr>
+                <td>{{ documentOwn.id }}</td>
+                <td>{{ documentOwn.filename }}</td>
+                <td>{{ documentOwn.uploadAt ? documentOwn.uploadAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ documentOwn.type }}</td>
+                <td>{% for categorie in documentOwn.categories %}
+                    {{ categorie.name }} |
+                {% endfor %}</td>
+                <td>
+                    {% if documentOwn.protected != null %}
+                        <i class="fa-solid fa-lock"></i>
+                    {% else %}
+                        <i class="fa-solid fa-lock-open"></i>   
+                    {% endif %}
+                </td>
+                <td>
+                    {% if documentOwn.allowRoles[0] == "ROLE_ADMIN" %}
+                       <div style="color: red;"> Administrateurs </div>
+                    {% elseif documentOwn.allowRoles[0] == "ROLE_GESTIONNAIRE"%}
+                        Gestionnaires
+                    {% else %}
+                        Utilisateurs
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('async_view_file', {'id': documentOwn.id }) }}" target="_blank" class="btn"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('async_download_file', {'id': documentOwn.id }) }}" class="btn"><i class="fa-solid fa-download"></i></a>
+                    <a href="{{ path('bo_document_edit', {'id': documentOwn.id}) }}" class="btn"><i class="fa-solid fa-gear"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Pas de résultats</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Documents</h1>
     <table class="table text-center">
         <thead>
             <tr>
@@ -58,11 +113,16 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Pas de résultats</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <a href="{{ path('bo_document_new') }}" class="btn btn-outline-secondary rounded-pill">Ajouter</a>
+{% else %}
+    <h1>Documents</h1>
+
+    <p>Vous devez attendre que votre compte soit valider par un administrateur pour accèder à cette page</p>
+{% endif %}
 {% endblock %}

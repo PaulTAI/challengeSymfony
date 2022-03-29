@@ -23,8 +23,10 @@ class DocumentController extends AbstractController
     #[Route('/', name: 'bo_documents', methods: ['GET'])]
     public function index(DocumentRepository $documentRepository): Response
     {
+        $appUser = $this->getUser();
         return $this->render('backOffice/document/index.html.twig', [
-            'documents' => $documentRepository->findAll(),
+            'documents' => $documentRepository->getDocumentsImNotOwner($appUser),
+            'documentsOwn' =>$documentRepository->findBy(['owner' => $appUser])
         ]);
     }
 

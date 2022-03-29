@@ -1,6 +1,23 @@
 {% extends "backOffice/layoutBackOffice.html.twig" %}
 {% block title %}Dashboard{% endblock %}
 {% block container %}
-    <h1>dashboard</h1>
+    <h1>Dashboard</h1>
+
+    <h3>Bonjour {{ app.user.firstname }} </h3>
+    <div class="p-3">
+        <span class="badge rounded-pill bg-info text-dark mb-3">Documents</span>
+        <p>Vous avez envoyez : {{ app.user.document | length }} Documents</p>
+    </div>
+    {% if app.user.isValidate %}
+    <div class="p-3">
+        <span class="badge rounded-pill bg-success mb-3">Validé</span>
+        <p>Votre compte a été validé</p>
+    </div>
+    {% else %}
+    <div class="p-3">
+        <span class="badge rounded-pill bg-danger mb-3">En attente</span>
+        <p>Votre compte n'es pas encore validé, il faut attendre qu'un administrateur s'en charge !</p>
+    </div>
+    {% endif %}
 {% endblock %}
 

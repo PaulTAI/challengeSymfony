@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Document;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -83,4 +84,19 @@ class DocumentRepository extends ServiceEntityRepository
     {
         return $this->findBy(['id' => $id])[0]->getAllowRoles();
     }
+
+    public function getDocumentsImNotOwner(User $user){
+
+        $qb = $this->createQueryBuilder('u');
+        $qb->where('u.owner != :user')
+           ->setParameter('user', $user);
+    
+        return $qb->getQuery()
+              ->getResult();
+    }
+
+    public function getDocumentsImNotOwner2(User $user){
+        return $this->findBy(['owner' => !$user]);
+    }
+
 }

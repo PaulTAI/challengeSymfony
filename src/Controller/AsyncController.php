@@ -103,28 +103,54 @@ class AsyncController extends AbstractController
      */
     public function downloadFile(Document $document, FlashyNotifier $flashy, FilesystemOperator $privateStorage){
 
-        $path = $document->getFilepath();
-        
-        $allowRole = $document->getAllowRoles()[0];
-        $this->denyAccessUnlessGranted($allowRole, $document);
-
-        $response = new StreamedResponse(function() use ($document, $privateStorage){
-            $pathFile= $document->getFilepath();
-            $outputStream = fopen('php://output', 'wb');
-            $fileStream = $privateStorage->readStream($pathFile);
-
-            stream_copy_to_stream($fileStream, $outputStream);
-        });
-
-        $response->headers->set('Content-Type', $privateStorage->mimeType($path));
-        $disposition = HeaderUtils::makeDisposition(
-            HeaderUtils::DISPOSITION_ATTACHMENT,
-            $path,
-        );
-
-        $response->headers->set('Content-Disposition', $disposition);
-
-        return $response;
+        $owner = $document->getOwner();
+        $user = $this->getUser();
+        if($owner == $user)
+        {
+            $path = $document->getFilepath();
+            
+            $response = new StreamedResponse(function() use ($document, $privateStorage){
+                $pathFile= $document->getFilepath();
+                $outputStream = fopen('php://output', 'wb');
+                $fileStream = $privateStorage->readStream($pathFile);
+    
+                stream_copy_to_stream($fileStream, $outputStream);
+            });
+    
+            $response->headers->set('Content-Type', $privateStorage->mimeType($path));
+            $disposition = HeaderUtils::makeDisposition(
+                HeaderUtils::DISPOSITION_ATTACHMENT,
+                $path,
+            );
+    
+            $response->headers->set('Content-Disposition', $disposition);
+    
+            return $response;
+        }else{
+            
+            $path = $document->getFilepath();
+            
+            $allowRole = $document->getAllowRoles()[0];
+            $this->denyAccessUnlessGranted($allowRole, $document);
+    
+            $response = new StreamedResponse(function() use ($document, $privateStorage){
+                $pathFile= $document->getFilepath();
+                $outputStream = fopen('php://output', 'wb');
+                $fileStream = $privateStorage->readStream($pathFile);
+    
+                stream_copy_to_stream($fileStream, $outputStream);
+            });
+    
+            $response->headers->set('Content-Type', $privateStorage->mimeType($path));
+            $disposition = HeaderUtils::makeDisposition(
+                HeaderUtils::DISPOSITION_ATTACHMENT,
+                $path,
+            );
+    
+            $response->headers->set('Content-Disposition', $disposition);
+    
+            return $response;
+        }
 
     }
 
@@ -133,21 +159,42 @@ class AsyncController extends AbstractController
      */
     public function viewFile(Document $document, FlashyNotifier $flashy, FilesystemOperator $privateStorage){
 
-        $path = $document->getFilepath();
-        
-        $allowRole = $document->getAllowRoles()[0];
-        $this->denyAccessUnlessGranted($allowRole, $document);
+        $owner = $document->getOwner();
+        $user = $this->getUser();
+        if($owner == $user)
+        {
+            $path = $document->getFilepath();
 
-        $response = new StreamedResponse(function() use ($document, $privateStorage){
-            $pathFile= $document->getFilepath();
-            $outputStream = fopen('php://output', 'wb');
-            $fileStream = $privateStorage->readStream($pathFile);
+            $response = new StreamedResponse(function() use ($document, $privateStorage){
+                $pathFile= $document->getFilepath();
+                $outputStream = fopen('php://output', 'wb');
+                $fileStream = $privateStorage->readStream($pathFile);
+    
+                stream_copy_to_stream($fileStream, $outputStream);
+            });
+    
+            $response->headers->set('Content-Type', $privateStorage->mimeType($path));
+    
+            return $response;
 
-            stream_copy_to_stream($fileStream, $outputStream);
-        });
-
-        $response->headers->set('Content-Type', $privateStorage->mimeType($path));
-
-        return $response;
+        }else{
+            
+            $path = $document->getFilepath();
+            
+            $allowRole = $document->getAllowRoles()[0];
+            $this->denyAccessUnlessGranted($allowRole, $document);
+    
+            $response = new StreamedResponse(function() use ($document, $privateStorage){
+                $pathFile= $document->getFilepath();
+                $outputStream = fopen('php://output', 'wb');
+                $fileStream = $privateStorage->readStream($pathFile);
+    
+                stream_copy_to_stream($fileStream, $outputStream);
+            });
+    
+            $response->headers->set('Content-Type', $privateStorage->mimeType($path));
+    
+            return $response;
+        }
     }
 }
