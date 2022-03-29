@@ -33,3 +33,71 @@
     }
 
 }
+
+.login-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem;
+    .login-title{
+        color: #1081cc;
+        h1{
+            font-size: 48px;
+        }
+    }
+    .login-errors{
+        font-style: italic;
+        color: red;
+    }
+    .login-form{
+        width: 70%;
+        text-align: center;
+        margin-top: 10px;
+        .form-field{
+            padding: 10px 10px;
+            .login-cta{
+                background-color: #1081cc;
+                text-decoration: none;
+                padding: 10px;
+                border: solid 2px #1081cc;
+                color: white;
+                border-radius: 2rem;
+                &:hover{
+                    background-color: #04619e;
+                    color: white;
+                    transition: background-color 0.5s;
+                }
+            }
+        }
+    }
+}
+
+.sign-main{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .title{
+        text-align: center;
+        margin-bottom: 15px;
+        color: #1081cc;
+    }
+    .form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .item-cta{
+            text-align: center;
+            button{
+                width: 30%;
+                border-radius: 15px;
+            }
+        }
+        .info{
+            color: #b51b00;
+            font-size: 12px;
+            width: 100%;
+        }
+    }
+}
+
