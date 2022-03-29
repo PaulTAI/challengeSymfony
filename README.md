@@ -41,12 +41,12 @@ Les Bonus =D !
 * Alertes d'actions
 
 ## A Savoir :
-Le Crud user a été crée à la main (e.g pas d'utilisation de FOSUserBundle, pas de make:crud)
-Notez que l'interface administrateur, tous les services & requests ont étés réalisez à la main. (Pas d'utilisations d'administrations bundles e.g EasyAdmin 3)
--Restrictions sécuritaires sur les forms & gestions
--Champs parser hmtl & script
-L'espace "Document" est aussi build à la main, pas d'utilisation de bundles hormis Flysystem pour le dépot d'object.
-Menus from scratch.
+Le Crud user a été crée à la main (e.g pas d'utilisation de FOSUserBundle, pas de make:crud)<br/>
+Notez que l'interface administrateur, tous les services & requests ont étés réalisez à la main. (Pas d'utilisations d'administrations bundles e.g EasyAdmin 3)<br/>
+-Restrictions sécuritaires sur les forms & gestions<br/>
+-Champs parser hmtl & script<br/>
+L'espace "Document" est aussi build à la main, pas d'utilisation de bundles hormis Flysystem pour le dépot d'object.<br/>
+Menus from scratch.<br/>
 Les DataFixtures sont locals, pas sur le repo at the moment.
 
 
