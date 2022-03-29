@@ -26,3 +26,5 @@ services:
     App\Service\:
         resource: '../src/Services/'
 
+    App\Service\Security\:
+        resource: '../src/Services/Security/'
