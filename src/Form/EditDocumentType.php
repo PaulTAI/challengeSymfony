@@ -27,7 +27,7 @@ class EditDocumentType extends AbstractType
                 'required' => false
             ])
             ->add('allowRoles', ChoiceType::class, [
-                'label' => false,
+                'label' => 'Accès (e.g Gestionnaires : Les gestionnaires pourront le consulter, pas les utilisateurs)',
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
                     'Gestionnaires' => 'ROLE_GESTIONNAIRE',

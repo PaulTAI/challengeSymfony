@@ -3,19 +3,22 @@
 {% block title %}ChallengeSym - Documents{% endblock %}
 
 {% block container %}
-    <h1>Document index</h1>
+    <h1>Documents</h1>
 
-    <table class="table">
+    <table class="table text-center">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Filename</th>
-                <th>UploadAt</th>
+                <th>Date d'ajout</th>
                 <th>Type</th>
                 <th>Categories</th>
                 <th>Protected</th>
-                <th>AllowRoles</th>
-                <th>actions</th>
+                {% if is_granted("ROLE_ADMIN") %}
+                <th>Propriétaire</th>
+                {% endif %}
+                <th>Accès</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -35,11 +38,22 @@
                         <i class="fa-solid fa-lock-open"></i>   
                     {% endif %}
                 </td>
-                <td>{{ document.allowRoles ? document.allowRoles|json_encode : '' }}</td>
+                {% if is_granted("ROLE_ADMIN") %}
+                <td>{{ document.owner.firstname }} {{ document.owner.lastname }}</td>
+                {% endif %}
                 <td>
-                    <a href="{{ asset('uploads/' ~ document.filepath) }}" target="_blank"><i class="fa-solid fa-eye"></i></a>
-                    <a href="{{ path('async_download_file', {'id': document.id }) }}"><i class="fa-solid fa-download"></i></a>
-                    <a href="{{ path('bo_document_edit', {'id': document.id}) }}"><i class="fa-solid fa-gear"></i></a>
+                    {% if document.allowRoles[0] == "ROLE_ADMIN" %}
+                       <div style="color: red;"> Administrateurs </div>
+                    {% elseif document.allowRoles[0] == "ROLE_GESTIONNAIRE"%}
+                        Gestionnaires
+                    {% else %}
+                        Utilisateurs
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('async_view_file', {'id': document.id }) }}" target="_blank" class="btn"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('async_download_file', {'id': document.id }) }}" class="btn"><i class="fa-solid fa-download"></i></a>
+                    <a href="{{ path('bo_document_edit', {'id': document.id}) }}" class="btn"><i class="fa-solid fa-gear"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -50,5 +64,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('bo_document_new') }}">Create new</a>
+    <a href="{{ path('bo_document_new') }}" class="btn btn-outline-secondary rounded-pill">Ajouter</a>
 {% endblock %}

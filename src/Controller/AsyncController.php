@@ -17,6 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AsyncController extends AbstractController
 {
@@ -86,8 +87,7 @@ class AsyncController extends AbstractController
 
     /**
      * @Route("/removeCategorie/{id}", name="async_remove_categorie")
-     * @isGranted("ROLE_ADMIN")
-     * @isGranted("ROLE_GESTIONNAIRE")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTIONNAIRE')")
      */
     public function removeCategorie(int $id, FlashyNotifier $flashy, CategorieRepository $catRepo)
     {

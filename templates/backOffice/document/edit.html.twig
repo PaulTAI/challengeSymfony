@@ -6,13 +6,16 @@
 {% endblock %}
 
 {% block container %}
-    <h1>Edit Document</h1>
+    <h1>Editer le Document</h1>
 
-    {{ include('backOffice/document/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-doc-btns">
+        <a href="{{ path('bo_documents') }}" class="text-decoration-none btn btn-outline-secondary"><i class="fa-solid fa-chevron-left"></i> Retour</a>
+        <button class="btn rounded-pill btn-primary">Editer</button>
+    </div>
+    {{ form_end(form) }}
 
-    <a href="{{ path('bo_documents') }}">back to list</a>
-
-    {{ include('backOffice/document/_delete_form.html.twig') }}
 {% endblock %}
 
 {% block select2js %}

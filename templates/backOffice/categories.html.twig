@@ -24,18 +24,21 @@
             {% for categorie in categories %}
                 <div class="categorie-content p-3 shadow-sm border border-info border-info rounded-3 cat-item">
                     <div class="name-cat">{{ categorie.name }}</div>
+                    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_GESTIONNAIRE") %}
                     <div class="btn-cat">
                         <a href="{{ path("async_remove_categorie", { id: categorie.id }) }}" class="btn btn-danger">
                             <i class="fa-solid fa-trash-can"></i>
                         </a>
                     </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
 
-
+        {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_GESTIONNAIRE") %}
         {# Notes pour les catégories #}
         <h4>Note :</h4>
         <p>Vous pouvez supprimer une catégorie même si celle-ci est liée à des documents, si c'est le cas, les documents attachés à cette catégorie n'aurons plus de catégories</p>
+        {% endif %}
     </div>
 {% endblock %}

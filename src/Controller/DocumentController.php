@@ -7,6 +7,7 @@ use App\Form\DocumentType;
 use App\Form\EditDocumentType;
 use App\Repository\DocumentRepository;
 use App\Service\Security\PasswordService;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,7 +42,7 @@ class DocumentController extends AbstractController
 
             //--FILE UPLOAD
             $file = $form->get('filepath')->getData();
-
+            $document->setType($file->guessExtension());
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
             if ($file) {
@@ -89,26 +90,55 @@ class DocumentController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'bo_document_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Document $document, DocumentRepository $documentRepository, UserPasswordHasherInterface $passHasher): Response
+    public function edit(Request $request, Document $document, DocumentRepository $documentRepository, UserPasswordHasherInterface $passHasher, FlashyNotifier $flashy): Response
     {
-        $form = $this->createForm(EditDocumentType::class, $document);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $fieldPass = $form["protected"]->getData();
-            var_dump($fieldPass);
-            if(!empty($fieldPass)){
-                $protectedPass = $passHasher->hashPassword($document, $fieldPass);
-                $document->setProtected($protectedPass);
+        $owner = $document->getOwner();
+        $user = $this->getUser();
+        if($owner == $user)
+        {
+            $form = $this->createForm(EditDocumentType::class, $document);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                $fieldPass = $form["protected"]->getData();
+                if(!empty($fieldPass)){
+                    $protectedPass = $passHasher->hashPassword($document, $fieldPass);
+                    $document->setProtected($protectedPass);
+                }
+                $documentRepository->add($document);
+                return $this->redirectToRoute('bo_documents', [], Response::HTTP_SEE_OTHER);
             }
-            $documentRepository->add($document);
-            return $this->redirectToRoute('bo_documents', [], Response::HTTP_SEE_OTHER);
-        }
+    
+            return $this->renderForm('backOffice/document/edit.html.twig', [
+                'document' => $document,
+                'form' => $form,
+            ]);
+        } else if($user->getRoles()[0] == "ROLE_USER" || $user->getRoles()[0] == "ROLE_GESTIONNAIRE") {
+            //-- Si l'utilisateur n'est pas le propriétaire & a le role User
+            $flashy->error("Tu n'es pas autorisé à editer ce document !");
+            return $this->redirectToRoute('bo_documents');
+        }else{
+            $allowRole = $document->getAllowRoles()[0];
+            $this->denyAccessUnlessGranted($allowRole, $document);
 
-        return $this->renderForm('backOffice/document/edit.html.twig', [
-            'document' => $document,
-            'form' => $form,
-        ]);
+            $form = $this->createForm(EditDocumentType::class, $document);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                $fieldPass = $form["protected"]->getData();
+                if(!empty($fieldPass)){
+                    $protectedPass = $passHasher->hashPassword($document, $fieldPass);
+                    $document->setProtected($protectedPass);
+                }
+                $documentRepository->add($document);
+                return $this->redirectToRoute('bo_documents', [], Response::HTTP_SEE_OTHER);
+            }
+    
+            return $this->renderForm('backOffice/document/edit.html.twig', [
+                'document' => $document,
+                'form' => $form,
+            ]);
+        }
     }
 
     #[Route('/{id}', name: 'bo_document_delete', methods: ['POST'])]

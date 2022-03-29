@@ -20,7 +20,7 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('filename', TextType::class, [
-                'label' => false,
+                'label' => 'Nom du fichier',
                 'required' =>false
             ])
             ->add('protected', PasswordType::class, [
@@ -28,7 +28,7 @@ class DocumentType extends AbstractType
                 'required' => false
             ])
             ->add('allowRoles', ChoiceType::class, [
-                'label' => false,
+                'label' => 'Accès (e.g Gestionnaires : Les gestionnaires pourront le consulter, pas les utilisateurs)',
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
                     'Gestionnaires' => 'ROLE_GESTIONNAIRE',
